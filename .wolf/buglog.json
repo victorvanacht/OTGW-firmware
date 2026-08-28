@@ -1,5 +1,41 @@
 [
   {
+    "id": "bug-151",
+    "timestamp": "2026-08-28T00:00:00Z",
+    "error_message": "Git refused the Windows bind-mounted repository inside the development container as dubious ownership.",
+    "file": ".devcontainer/devcontainer.json",
+    "root_cause": "The mounted workspace retains Windows ownership metadata that does not match the non-root container user.",
+    "fix": "Configure the container workspace with git config --global --add safe.directory during postCreateCommand before Git submodule initialization.",
+    "tags": ["devcontainer", "docker", "windows", "git", "build"],
+    "related_bugs": [],
+    "occurrences": 1,
+    "last_seen": "2026-08-28T00:00:00Z"
+  },
+  {
+    "id": "bug-153",
+    "timestamp": "2026-08-28T00:00:00Z",
+    "error_message": "PlatformIO refused the named cache volume because Docker initialized it as root-owned while the container runs as vscode.",
+    "file": ".devcontainer/devcontainer.json",
+    "root_cause": "Named Docker volumes are created with root ownership and mask the image directory ownership when mounted.",
+    "fix": "Use the image's passwordless sudo to chown the PlatformIO cache volume to vscode during postCreateCommand before running PlatformIO.",
+    "tags": ["devcontainer", "docker", "platformio", "permissions", "build"],
+    "related_bugs": [],
+    "occurrences": 1,
+    "last_seen": "2026-08-28T00:00:00Z"
+  },
+  {
+    "id": "bug-152",
+    "timestamp": "2026-08-28T00:00:00Z",
+    "error_message": "Development-container initialization failed while cloning the private other-projects submodule without GitHub credentials.",
+    "file": ".devcontainer/devcontainer.json",
+    "root_cause": "The private reference submodule uses HTTPS and container creation runs non-interactively without host GitHub credentials.",
+    "fix": "Do not initialize the optional reference-only submodule automatically. Initialize it explicitly after authenticating when its contents are needed; build dependencies remain resolved by PlatformIO.",
+    "tags": ["devcontainer", "docker", "submodule", "github", "build"],
+    "related_bugs": [],
+    "occurrences": 1,
+    "last_seen": "2026-08-28T00:00:00Z"
+  },
+  {
     "id": "bug-036",
     "timestamp": "2026-06-24T00:00:00Z",
     "error_message": "ADR status-flip script corrupted 21 already-Accepted ADRs by rewriting their Status-History prose ('Proposed 2026-05-26; accepted by maintainer' -> 'Accepted 2026-05-26'). Separately, the initial grep reported 31 Proposed ADRs when only 5 were truly Proposed.",
@@ -2661,5 +2697,29 @@
     "related_bugs": [],
     "occurrences": 1,
     "last_seen": "2026-08-03T20:35:00+02:00"
+  },
+  {
+    "id": "bug-154",
+    "timestamp": "2026-08-28T00:00:00Z",
+    "error_message": "mklittlefs: /lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.32' not found",
+    "file": ".devcontainer/Dockerfile",
+    "root_cause": "The Debian 12 Bookworm devcontainer provides libstdc++6 without GLIBCXX_3.4.32, which is required by the PlatformIO mklittlefs binary.",
+    "fix": "Changed the devcontainer base image to Debian 13 Trixie and explicitly installed libstdc++6 so the filesystem image builder has a compatible C++ runtime.",
+    "tags": ["build", "filesystem", "mklittlefs", "libstdc++", "devcontainer", "esp32"],
+    "related_bugs": [],
+    "occurrences": 1,
+    "last_seen": "2026-08-28T00:00:00Z"
+  },
+  {
+    "id": "bug-155",
+    "timestamp": "2026-08-28T00:00:00Z",
+    "error_message": "PermissionError: [Errno 13] Permission denied: '/workspaces/OTGW-build-archive'",
+    "file": ".devcontainer/devcontainer.json",
+    "root_cause": "The build archive directory lives as a sibling of the repository under /workspaces, but /workspaces is root-owned in the devcontainer and the directory did not exist for the vscode user.",
+    "fix": "Create /workspaces/OTGW-build-archive during postCreateCommand and chown it to vscode; also created and chowned it in the current container.",
+    "tags": ["build", "archive", "permissions", "devcontainer", "esp32"],
+    "related_bugs": ["bug-153"],
+    "occurrences": 1,
+    "last_seen": "2026-08-28T00:00:00Z"
   }
 ]

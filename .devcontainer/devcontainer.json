@@ -1,0 +1,26 @@
+{
+  "name": "OTGW Firmware ESP32",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "vscode",
+  "containerEnv": {
+    "PLATFORMIO_CORE_DIR": "/home/vscode/.platformio",
+    "PYTHONUTF8": "1",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "mounts": [
+    "source=otgw-platformio-${localWorkspaceFolderBasename},target=/home/vscode/.platformio,type=volume",
+    "source=/dev,target=/dev-host,type=bind"
+  ],
+  "privileged": true,
+  "postCreateCommand": "sudo mkdir -p /workspaces/OTGW-build-archive && sudo chown -R vscode:vscode /home/vscode/.platformio /workspaces/OTGW-build-archive && git config --global --add safe.directory ${containerWorkspaceFolder} && pio pkg install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "platformio.platformio-ide"
+      ]
+    }
+  }
+}

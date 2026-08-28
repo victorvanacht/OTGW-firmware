@@ -30,6 +30,7 @@
 
 ## ./
 
+- `.devcontainer/` — Reproducible ESP32 PlatformIO development container and USB workflow documentation.
 - `.codex` (~0 tok)
 - `.gitattributes` — Git attributes (~139 tok)
 - `.gitignore` — Git ignore rules (~677 tok)
@@ -810,3 +811,7 @@
 - `v2.css` — Styles: 13 vars (~15274 tok)
 - `v2.html` — OTGW firmware (~11760 tok)
 - `v2.js` — applyTheme: initTheme, showPage, showDesign + 8 more (~62571 tok)
+
+## .devcontainer/
+
+- `Dockerfile` — Debian Trixie Python build image with PlatformIO host dependencies
