@@ -8,6 +8,29 @@ OTGW-firmware turns the NodoShop OpenTherm Gateway into a networked smart heatin
 
 ---
 
+## Fork and Development Container
+
+This repository is a fork of the upstream OTGW-firmware project. It adds a
+Dev Container configuration for ESP32-S3 development, so PlatformIO, Python,
+compiler tooling, USB utilities, and required Linux permissions are supplied
+inside the container instead of being installed on the host computer.
+
+Open the repository in VS Code and run **Dev Containers: Reopen in Container**.
+Build the OTGW32 target from the container with:
+
+```bash
+./build.sh --target esp32
+```
+
+USB attachment from Windows to the container is supported through `usbipd-win`
+and the `scripts/attach-usb-to-devcontainer.ps1` helper. This path is still
+experimental and not fully reliable yet; build in the container, but expect to
+need the host-side flashing workflow if USB passthrough does not expose the
+serial device. See [.devcontainer/README.md](.devcontainer/README.md) for the
+current setup and troubleshooting steps.
+
+---
+
 ## What's New in v2.0.0
 
 Version 2.0.0 is a major platform release. It targets the ESP32/OTGW32 platform; the ESP8266 is no longer a 2.0.0 build target. The firmware builds from a single source tree via PlatformIO. If you are coming from a v1.x ESP8266 build, see [Migrating from ESP8266 (1.x)](#migrating-from-esp8266-1x).

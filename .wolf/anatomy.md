@@ -54,7 +54,7 @@
 - `partitions_otgw_esp32_combo.csv` — OTGW-firmware ESP32-S3 COMBO partition table — single app (no OTA), 4MB flash (~364 tok)
 - `partitions_otgw_esp32.csv` — OTGW-firmware ESP32-S3 partition table — single app (no OTA), 4MB flash (~275 tok)
 - `platformio.ini` — Declares used (~3999 tok)
-- `README.md` — Project documentation (~5272 tok)
+- `README.md` — Project documentation and fork-specific Dev Container setup (~5272 tok)
 
 ## .build-venv/
 
