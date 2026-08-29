@@ -2721,5 +2721,29 @@
     "related_bugs": ["bug-153"],
     "occurrences": 1,
     "last_seen": "2026-08-28T00:00:00Z"
+  },
+  {
+    "id": "bug-156",
+    "timestamp": "2026-08-29T00:00:00Z",
+    "error_message": "usbipd attach rejected the positional docker-desktop argument after the script passed --wsl --distribution <name>.",
+    "file": "scripts/attach-usb-to-devcontainer.ps1",
+    "root_cause": "usbipd-win 5.3 uses `--wsl <distribution>` and does not support a separate `--distribution` option for `attach`.",
+    "fix": "Changed the attach command to `usbipd attach --wsl $Distribution --busid $BusId` and documented that Docker Desktop is not the WSL attach target.",
+    "tags": ["usbipd", "windows", "powershell", "devcontainer", "esp32"],
+    "related_bugs": [],
+    "occurrences": 1,
+    "last_seen": "2026-08-29T00:00:00Z"
+  },
+  {
+    "id": "bug-157",
+    "timestamp": "2026-08-29T00:00:00Z",
+    "error_message": "usbipd attached successfully but the helper then failed with '/bin/sh: bash: not found' when -Distribution docker-desktop selected its distribution-specific verification probe.",
+    "file": "scripts/attach-usb-to-devcontainer.ps1",
+    "root_cause": "usbipd-win 5.3 attaches USB devices to all WSL 2 distributions and no longer needs a selected distribution; docker-desktop lacks Bash for the helper's old probe.",
+    "fix": "Removed the Distribution parameter and post-attach Bash probe. The helper now calls `usbipd attach --wsl --busid $BusId` and reports the expected devcontainer device paths.",
+    "tags": ["usbipd", "windows", "powershell", "devcontainer", "wsl", "esp32"],
+    "related_bugs": ["bug-156"],
+    "occurrences": 1,
+    "last_seen": "2026-08-29T00:00:00Z"
   }
 ]

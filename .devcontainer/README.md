@@ -34,12 +34,13 @@ workflow:
 
 ```powershell
 .\scripts\attach-usb-to-devcontainer.ps1 -List
-.\scripts\attach-usb-to-devcontainer.ps1 -BusId <BUSID> -Distribution <WSL_DISTRO>
+.\scripts\attach-usb-to-devcontainer.ps1 -BusId <BUSID>
 ```
 
 The first attach needs an elevated PowerShell window because USB/IP binding is
-a Windows device-sharing operation. Reconnect the device with the same command
-after unplugging it or restarting WSL.
+a Windows device-sharing operation. usbipd-win attaches the device to all WSL 2
+distributions; do not specify a distribution. Reconnect the device with the
+same command after unplugging it or restarting WSL.
 
 For a Docker engine installed directly in that WSL distribution, the attached
 device appears in the container below `/dev-host`, usually as
